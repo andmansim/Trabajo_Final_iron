@@ -5,6 +5,7 @@ from sklearn.metrics import accuracy_score, confusion_matrix
 from sklearn.linear_model import LogisticRegression
 import seaborn as sns
 import matplotlib as plt
+import statsmodels.api as sm
 warnings.filterwarnings('ignore')
 
 #Leemos con pandas el csv
@@ -67,6 +68,9 @@ for i in range(len(df['yr_renovated'])):
 df = df.drop(columns = ['yr_renovated'], axis = 1)
 print(df['yr_built'])
 
+#Las columnas que tengan que ver con numero de habitaciones, las podemos agrupar para simpllificar los calculos
+df['habitaciones'] = df['bathrooms'] + df['bedrooms']
+
 #Ahora que el dataset está limpio, vamos a pasar a hacer la regresión
 #Primero, vamos a entrenar y testear.
 
@@ -93,3 +97,25 @@ plt.show()
 sns.heatmap(confusion_matrix(y_test, logreg.predict(x_test), annot= True))
 plt.title('MATRIZ TEST')
 plt.show()
+
+
+#Por último, construimos la recta de regresion lineal
+#La recta se construye con dos variables, por lo que hay que construir una para cada parcon price
+x2 = df['price']
+
+y2 = df['yr_built']
+y3 = df['floors']
+y4 = df['waterfront']
+y5 = df['conditon']
+y6 = df['grade']
+y7 = df['sqft_living15']
+y8 = df['sqft_lot15']
+
+x2_const = sm.add_constant(x2)
+modelo = sm.OLS(y2, x2_const).fit()
+modelo2 = sm.OLS(y3, x2_const).fit()
+modelo3 = sm.OLS(y4, x2_const).fit()
+modelo4 = sm.OLS(y5, x2_const).fit()
+modelo5 = sm.OLS(y6, x2_const).fit()
+modelo6 = sm.OLS(y7, x2_const).fit()
+modelo7 = sm.OLS(y8, x2_const).fit()
