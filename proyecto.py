@@ -80,7 +80,7 @@ for i in range(len(df['bedrooms'])):
 print(df.corr())
 
 #Por la matriz de correlacion vemos que los unicos datos con los que el precio puede estar más relacionado es con los 
-#metros cadrados de vivienda y con la calidad (sqft_living15, grade)
+#metros cuadrados de vivienda y con la calidad (sqft_living15, grade)
 #Por tanto, vamos a probar la recta de regresión con esas dos columnas
 
 x2 = df['price']
@@ -112,58 +112,32 @@ regresion(y6, x2, x2_const)
 regresion(y7, x2, x2_const)
 print(df.groupby(['price']).count())
 #Se observa en las gráficas que la recta está descuadrada debido a los valores atípicos. Vamos a eliminar estos valores y a volverlo a intentar
-print(df['grade'].unique()) #El 12 y el 13 aparecen muy poco, son filas que podemos eliminar
+
+
+print(df['grade'].unique()) #A partir del 10, aparecen muy poco, son filas que podemos eliminar
 for i in range(len(df['grade'])):
-    if df['grade'][i] == 12 or df['grade'][i] == 13:
-        df.drop([i], axis = 0, inplace = True )
-        df = df.reset_index()
-
-for i in range(len(df['price'])):
-    if df['price'][i] < 7000000:
-        pass
-    else:
-        df.drop([i], axis = 0, inplace = True )
-        df = df.reset_index()
-
-
-a = df['sqft_living15'].unique()
-
-
-print(df.groupby(['sqft_living15']).count()) #Como hay muchísimos valores únicos, vamos a agrupar por rangos
-'''for i in range(len(df['sqft_living15'])):
-    if int(df['sqft_living15'][i]) < 600:
+    if df['grade'][i] > 9:
         df = df.drop([i], axis = 0)
-    if  600 <= int(df['sqft_living15'][i]) < 800:
-        df['sqft_living15'][i] = 700
-    if 800 <= int(df['sqft_living15'][i]) < 1000:
-        df['sqft_living15'][i] = 900
-    if 1000 <= int(df['sqft_living15'][i]) < 1500:
-        df['sqft_living15'][i] = 1250
-    if 1500 <= int(df['sqft_living15'][i]) < 2000:
-        df['sqft_living15'][i] = 1750
-    if 2000 <= int(df['sqft_living15'][i]) < 3000:
-        df['sqft_living15'][i] = 2500
-    if 3000 <= int(df['sqft_living15'][i]) < 4000:
-        df['sqft_living15'][i] = 3500
-    if 4000 <= int(df['sqft_living15'][i]) < 5000:
-        df['sqft_living15'][i] = 4500
-    if 5000 <= int(df['sqft_living15'][i]) < 6000:
-        df['sqft_living15'][i] = 5500
-    if 6000 <= int(df['sqft_living15'][i]):
-        df['sqft_living15'][i] = 6000
-'''
 x2 = df['price']
 
 y6 = df['grade']
-y7 = df['sqft_living15']
 
 x2_const = sm.add_constant(x2)
 regresion(y6, x2, x2_const)
+#Vemos que, aún así, no nos sirve como referente para una regresión lineal, ya que la disposición de los datos no se acerca a una recta.
+
+a = df['sqft_living15'].unique()
+print(a)
+
+y7 = df['sqft_living15']
 regresion(y7, x2, x2_const)
 
+#Una vez quitadas esas filas, solucionamos el problema en las dos gráficas.
+#La que más se puede acercar a una linea es la sqft_living15
+#Por tanto, entrenaremos nuestro modelo con esa columna
 
-'''y = df['price']
-x = df
+y = df['price']
+x = df.drop(['price'], axis = 1)
 
 x_train, x_test, y_train, y_test = train_test_split(x, y, test_size = 0.2)
 
@@ -173,8 +147,24 @@ logreg.fit(x_train, y_train)
 scoretrain = logreg.score(x_train, y_train)
 scoretest = logreg.score(x_test, y_test)
 
-precision_train = accuracy_score(y_train, logreg.predict(x_train))
-precision_test = accuracy_score(y_test, logreg.predict(x_test))
+dicc = {'Train_score: ': scoretrain,
+       'Test_score: ': scoretest}
+print(dicc)
+
+accuracy_score_train = accuracy_score(y_train, logreg.predict(x_train))
+print('ACCURACY SCORE TRAIN')
+print(accuracy_score_train)
+
+accuracy_score_test = accuracy_score(y_test, logreg.predict(x_test))
+print('ACCURACY SCORE TEST')
+print(accuracy_score_test)
+
+sns.heatmap(confusion_matrix(y_train, logreg.predict(x_train)), annot = True)
+plt.title('MATRIZ CONFUSION DE TRAIN')
+plt.show()
+sns.heatmap(confusion_matrix(y_test, logreg.predict(x_test)), annot = True)
+plt.title('MATRIZ CONFUSION DE TEST')
+plt.show()
 
 sns.heatmap(confusion_matrix(y_train, logreg.predict(x_train), annot= True))
 plt.title('MATRIZ TRAIN')
@@ -183,7 +173,7 @@ plt.show()
 sns.heatmap(confusion_matrix(y_test, logreg.predict(x_test), annot= True))
 plt.title('MATRIZ TEST')
 plt.show()
-'''
+
 
 #Vamos a hacer gráficas para entender como funcionan los datos, con respecto al preio
 
