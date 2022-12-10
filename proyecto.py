@@ -46,4 +46,6 @@ df = df.drop('lat')
 df = df.drop('long')
 
 #Para simplificar el análisis, vamos a agrupar todas las columnas que tengan las maediciones de metros cuadrados, haciendo una única columna que diga todos los metros cuadrados de la casa.
-
+#Tendremos al final dos columnas: la medida del terreno y la medida de la casa
+df['sqft_casa'] = df['sqft_above'] + df['sqft_basement']
+df = df.drop('sqft_living15')
