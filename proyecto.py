@@ -50,3 +50,14 @@ df = df.drop(columns = ['date', 'lat', 'long', 'zipcode'], axis = 1)
 #above y basement los quitamos ya que living es la suma de estas, y en el precio influyen los metos cuadrados totales
 df = df.drop(columns = ['sqft_above', 'sqft_basement', 'sqft_living', 'sqft_lot'], axis = 1)
 print(df.head())
+print(df.columns)
+
+#Como hay muy pocas casas renovadas, hay muchos ceros en la columna renovate. 
+#Por tanto, nos podemos quitar esa columna si en el año de construcción ponemos el año de renovacion de las pocas que se han renovado
+
+for i in range(len(df['yr_renovated'])):
+    if df['yr_renovated'][i] != 0:
+        df['yr_built'][i] = df['yr_renovated'][i]
+
+df = df.drop(columns = ['yr_renovated'], axis = 1)
+print(df['yr_built'])
