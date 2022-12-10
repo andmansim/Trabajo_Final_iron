@@ -39,11 +39,10 @@ print(df['bathrooms'])
 redondear('floors')
 print(df['floors'])
 
-#Ahora vamos a quitar las columnas que no nos hacen falta: lat, long, date
+#Ahora vamos a quitar las columnas que no nos hacen falta: lat, long, date, zipcode
 
-df = df.drop('date')
-df = df.drop('lat')
-df = df.drop('long')
+df = df.drop(columns = ['date', 'lat', 'long', 'zipcode'], axis = 1)
+
 
 #Para simplificar el análisis, vamos a agrupar todas las columnas que tengan las maediciones de metros cuadrados, haciendo una única columna que diga todos los metros cuadrados de la casa.
 #Tendremos al final dos columnas: la medida del terreno y la medida de la casa
