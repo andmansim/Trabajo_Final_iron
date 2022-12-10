@@ -18,7 +18,7 @@ df.info()
 #En principio no se ve ningún dato nulo  
 #Como queremos predecir el precio, la columna que va a ir por separado es price
 #Para predecir el precio necesitamos: bedrooms, bathrooms, sqft (los examinamos para ver si los podemos agrupar), floors, condiciones, grade, year_built, year_renovate, waterview
-#lat, long no nos influye ya que estan todas las casas en la misma zona de Seattle, Tacoma y alrededores (hemos buscado en google maps)
+#lat, long y zipcode no nos influye ya que estan todas las casas en la misma zona de Seattle, Tacoma y alrededores (hemos buscado en google maps)
 
 
 #Pasamos a la limpieza de los datos
@@ -45,6 +45,8 @@ df = df.drop(columns = ['date', 'lat', 'long', 'zipcode'], axis = 1)
 
 
 #Para simplificar el análisis, vamos a agrupar todas las columnas que tengan las maediciones de metros cuadrados, haciendo una única columna que diga todos los metros cuadrados de la casa.
-#Tendremos al final dos columnas: la medida del terreno y la medida de la casa
-df['sqft_casa'] = df['sqft_above'] + df['sqft_basement']
-df = df.drop('sqft_living15')
+#Tendremos al final dos columnas: la medida del terreno (lot) y la medida de la casa (living)
+#No nos interesan las medidas anteriores a las reformas ya que no existen. 
+#above y basement los quitamos ya que living es la suma de estas, y en el precio influyen los metos cuadrados totales
+df = df.drop(columns = ['sqft_above', 'sqft_basement', 'sqft_living', 'sqft_lot'], axis = 1)
+print(df.head())
