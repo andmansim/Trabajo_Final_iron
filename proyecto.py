@@ -1,5 +1,9 @@
 import pandas as pd
 import warnings
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score, confusion_matrix
+from sklearn.linear_model import LogisticRegression
+import seaborn as sns
 warnings.filterwarnings('ignore')
 
 #Leemos con pandas el csv
@@ -61,3 +65,17 @@ for i in range(len(df['yr_renovated'])):
 
 df = df.drop(columns = ['yr_renovated'], axis = 1)
 print(df['yr_built'])
+
+#Ahora que el dataset está limpio, vamos a pasar a hacer la regresión
+#Primero, vamos a entrenar y testear.
+
+df.corr()
+
+y = df['price']
+x = df
+
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size = 0.2)
+
+logreg = LogisticRegression(max_iter= 2000)
+precision_train = accuracy_score(y_train, logreg.predict(x_train))
+precision_test = accuracy_score(y_test, logreg.predict(x_test))
