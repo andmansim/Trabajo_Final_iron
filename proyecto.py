@@ -41,11 +41,11 @@ def redondear(columna):
             df[columna][i] = round(df[columna][i])
     return df
 
-'''redondear('bathrooms')
+redondear('bathrooms')
 print(df['bathrooms'])
 redondear('floors')
 print(df['floors'])
-'''
+
 #Ahora vamos a quitar las columnas que no nos hacen falta: lat, long, date, zipcode
 
 df = df.drop(columns = ['date', 'lat', 'long', 'zipcode'], axis = 1)
@@ -70,9 +70,9 @@ df = df.drop(columns = ['yr_renovated'], axis = 1)
 print(df['yr_built'])
 
 #Las columnas que tengan que ver con numero de habitaciones, las podemos agrupar para simpllificar los calculos
-'''df['habitaciones'] = 0
+df['habitaciones'] = 0
 for i in range(len(df['bedrooms'])):
-       df['habitaciones'][i] = int(df['bedrooms'][i]) + int(df['bathrooms'][i])'''
+       df['habitaciones'][i] = int(df['bedrooms'][i]) + int(df['bathrooms'][i])
 
 #Ahora que el dataset está limpio, vamos a pasar a hacer la regresión
 #Primero, vamos a entrenar y testear.
@@ -132,16 +132,18 @@ print(a)
 y7 = df['sqft_living15']
 regresion(y7, x2, x2_const)
 
+y8 = df['habitaciones']
+regresion(y8, x2, x2_const)
 #Una vez quitadas esas filas, solucionamos el problema en las dos gráficas.
 #La que más se puede acercar a una linea es la sqft_living15
 #Por tanto, entrenaremos nuestro modelo con esa columna
 
 y = df['price']
-x = df.drop(['price'], axis = 1)
+x = df.drop(['price','id', 'sqft_lot15', 'floors', 'waterfront', 'condition', 'yr_built'], axis = 1)
 
 x_train, x_test, y_train, y_test = train_test_split(x, y, test_size = 0.2)
 
-logreg = LogisticRegression(max_iter= 2000)
+logreg = LogisticRegression(max_iter= 100)
 
 logreg.fit(x_train, y_train)
 scoretrain = logreg.score(x_train, y_train)
