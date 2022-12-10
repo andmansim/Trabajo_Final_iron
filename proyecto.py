@@ -4,6 +4,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, confusion_matrix
 from sklearn.linear_model import LogisticRegression
 import seaborn as sns
+import matplotlib as plt
 warnings.filterwarnings('ignore')
 
 #Leemos con pandas el csv
@@ -77,5 +78,18 @@ x = df
 x_train, x_test, y_train, y_test = train_test_split(x, y, test_size = 0.2)
 
 logreg = LogisticRegression(max_iter= 2000)
+
+logreg.fit(x_train, y_train)
+scoretrain = logreg.score(x_train, y_train)
+scoretest = logreg.score(x_test, y_test)
+
 precision_train = accuracy_score(y_train, logreg.predict(x_train))
 precision_test = accuracy_score(y_test, logreg.predict(x_test))
+
+sns.headmap(confusion_matrix(y_train, logreg.predict(x_train), annot= True))
+plt.title('MATRIZ TRAIN')
+plt.show()
+
+sns.headmap(confusion_matrix(y_test, logreg.predict(x_test), annot= True))
+plt.title('MATRIZ TEST')
+plt.show()
