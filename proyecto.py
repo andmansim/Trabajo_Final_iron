@@ -38,3 +38,12 @@ redondear('bathrooms')
 print(df['bathrooms'])
 redondear('floors')
 print(df['floors'])
+
+#Ahora vamos a quitar las columnas que no nos hacen falta: lat, long, date
+
+df = df.drop('date')
+df = df.drop('lat')
+df = df.drop('long')
+
+#Para simplificar el análisis, vamos a agrupar todas las columnas que tengan las maediciones de metros cuadrados, haciendo una única columna que diga todos los metros cuadrados de la casa.
+
