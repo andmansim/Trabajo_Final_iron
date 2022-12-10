@@ -86,10 +86,10 @@ scoretest = logreg.score(x_test, y_test)
 precision_train = accuracy_score(y_train, logreg.predict(x_train))
 precision_test = accuracy_score(y_test, logreg.predict(x_test))
 
-sns.headmap(confusion_matrix(y_train, logreg.predict(x_train), annot= True))
+sns.heatmap(confusion_matrix(y_train, logreg.predict(x_train), annot= True))
 plt.title('MATRIZ TRAIN')
 plt.show()
 
-sns.headmap(confusion_matrix(y_test, logreg.predict(x_test), annot= True))
+sns.heatmap(confusion_matrix(y_test, logreg.predict(x_test), annot= True))
 plt.title('MATRIZ TEST')
 plt.show()
