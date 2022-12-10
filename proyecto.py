@@ -115,11 +115,15 @@ print(df.groupby(['price']).count())
 print(df['grade'].unique()) #El 12 y el 13 aparecen muy poco, son filas que podemos eliminar
 for i in range(len(df['grade'])):
     if df['grade'][i] == 12 or df['grade'][i] == 13:
-        df.drop([i], axis = 0, inplace = True)
+        df.drop([i], axis = 0, inplace = True )
+        df = df.reset_index()
+
+for i in range(len(df['price'])):
     if df['price'][i] < 7000000:
         pass
     else:
-       df.drop([i], axis = 0, inplace = True)
+        df.drop([i], axis = 0, inplace = True )
+        df = df.reset_index()
 
 
 a = df['sqft_living15'].unique()
