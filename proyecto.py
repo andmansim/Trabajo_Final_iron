@@ -145,7 +145,7 @@ regresion(y8, x2, x2_const)
 #Por tanto, entrenaremos nuestro modelo con esa columna
 
 y = df['price']
-x = df.drop(['price','id', 'sqft_lot15', 'floors', 'waterfront', 'condition', 'yr_built'], axis = 1)
+x = df.drop(['price','id', 'sqft_lot15', 'floors', 'waterfront', 'condition', 'yr_built', 'grade'], axis = 1)
 
 x_train, x_test, y_train, y_test = train_test_split(x, y, test_size = 0.2)
 
