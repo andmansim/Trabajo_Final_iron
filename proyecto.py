@@ -87,6 +87,8 @@ x2 = df['price']
 
 y6 = df['grade']
 y7 = df['sqft_living15']
+y8 = df['habitaciones']
+
 
 x2_const = sm.add_constant(x2)
 
@@ -110,6 +112,7 @@ def regresion(y, x, xconst):
 
 regresion(y6, x2, x2_const)
 regresion(y7, x2, x2_const)
+regresion(y8, x2, x2_const)
 print(df.groupby(['price']).count())
 #Se observa en las gráficas que la recta está descuadrada debido a los valores atípicos. Vamos a eliminar estos valores y a volverlo a intentar
 

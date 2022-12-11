@@ -1,0 +1,1 @@
+limpieza, regresion y train y test en jupiter notebook

@@ -1,0 +1,1 @@
+guardar el csv limpio como un archivo pickle

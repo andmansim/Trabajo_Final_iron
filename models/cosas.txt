@@ -1,0 +1,1 @@
+archivo pickle con los modelos generados para predecir el precio de una casa
