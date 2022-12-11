@@ -77,7 +77,7 @@ for i in range(len(df['bedrooms'])):
        df['habitaciones'][i] = int(df['bedrooms'][i]) + int(df['bathrooms'][i])
 
 #Exportamos el csv limpio y organizado
-df.to_csv('casas_limpio.csv')
+df.to_csv('casas_limpio.csv', index = False)
 
 
 #Ahora que el dataset está limpio, vamos a pasar a hacer la regresión
