@@ -7,6 +7,7 @@ import seaborn as sns
 import pylab as plt
 import statsmodels.api as sm
 import numpy as np
+import pickle
 
 
 warnings.filterwarnings('ignore')
@@ -161,6 +162,10 @@ scoretest = logreg.score(x_test, y_test)
 dicc = {'Train_score: ': scoretrain,
        'Test_score: ': scoretest}
 print(dicc)
+
+#ransformamos los datos de la predicción a un archivo pickle
+with open('predecir_casa.pickle', 'wb') as f:
+    pickle.dump(dicc, f)
 
 accuracy_score_train = accuracy_score(y_train, logreg.predict(x_train))
 print('ACCURACY SCORE TRAIN')
