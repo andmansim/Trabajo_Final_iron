@@ -7,7 +7,7 @@ import seaborn as sns
 import pylab as plt
 import statsmodels.api as sm
 import numpy as np
-from sklearn.preprocessing import StandardScaler
+
 
 warnings.filterwarnings('ignore')
 
@@ -79,14 +79,6 @@ for i in range(len(df['bedrooms'])):
 #Exportamos el csv limpio y organizado
 df.to_csv('casas_limpio.csv')
 
-
-#Standart scale
-ss = StandardScaler()
-df_transformado = ss.fit_transform(df)
-df_transformado
-x_transformado = df_transformado[:, 0]
-y_transformado = df_transformado[:, 1]
-sns.scatterplot(x_transformado, y_transformado)
 
 #Ahora que el dataset está limpio, vamos a pasar a hacer la regresión
 #Primero, vamos a entrenar y testear.
