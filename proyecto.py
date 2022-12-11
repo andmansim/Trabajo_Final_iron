@@ -74,6 +74,9 @@ df['habitaciones'] = 0
 for i in range(len(df['bedrooms'])):
        df['habitaciones'][i] = int(df['bedrooms'][i]) + int(df['bathrooms'][i])
 
+#Exportamos el csv limpio y organizado
+df.to_csv('casas_limpio.csv')
+
 #Ahora que el dataset está limpio, vamos a pasar a hacer la regresión
 #Primero, vamos a entrenar y testear.
 
@@ -179,18 +182,3 @@ sns.heatmap(confusion_matrix(y_test, logreg.predict(x_test), annot= True))
 plt.title('MATRIZ TEST')
 plt.show()
 
-
-#Vamos a hacer gráficas para entender como funcionan los datos, con respecto al preio
-
-'''def puntos(xeje, yeje):
-    sns.scatterplot(data=df, x = xeje, y = yeje)
-    plt.show()
-
-puntos('price', 'yr_built')
-puntos('price', 'condition')
-puntos('price', 'grade')
-puntos('price', 'sqft_living15')
-puntos('price', 'sqft_lot15')
-'''
-#Por último, construimos la recta de regresion lineal
-#La recta se construye con dos variables, por lo que hay que construir una para cada parcon price
